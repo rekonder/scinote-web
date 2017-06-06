@@ -21,6 +21,7 @@
       <% @repositories.each.with_index do |repo, i| %>
         <div class="tab-pane tab-pane-settings <%= 'active' if i == 0 %>" id="custom_repo_<%= repo.id %>">
           <!-- Tab Content -->
+          <%= render partial: 'repository', locals: { repository: repo } %>
         </div>
       <% end %>
     </div>

@@ -617,6 +617,7 @@ en:
       more_activities: "Load older activities"
     repository:
       head_title: "%{project} | %{module} | Custom repository %{repository}"
+      export: 'Export'
 
   experiments:
     new:
@@ -1656,9 +1657,13 @@ en:
     popover_html: "<span class='silver'>Team:</span>&nbsp;%{team} <br> <span class='silver'>Role:</span>&nbsp;%{role} <br> <span class='silver'>Joined:</span>&nbsp;%{time}"
 
   zip_export:
+    modal_label: 'Export repository'
     notification_title: 'Your package is ready to be exported!'
     expired_title: 'The required file was expired!'
     expired_description: 'The downloadable file expires in 7 days after its creation.'
+    repository_html: '<p>You are about to export selected items in repository %{repository}</p> <br> Repository will be exported in a .csv file format. You will receive <strong>email with a link</strong> where you can download it.'
+    export_error: "Error when creating zip export."
+
   # This section contains general words that can be used in any parts of
   # application.
   tiny_mce:

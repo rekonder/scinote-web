@@ -101,4 +101,9 @@ class ZipExport < ActiveRecord::Base
       end
     end
   end
+
+  def generate_repository_zip(tmp_dir, data, options = {})
+    file = FileUtils.touch("#{tmp_dir}/export.csv").first
+    File.open(file, 'wb') { |f| f.write(data) }
+  end
 end

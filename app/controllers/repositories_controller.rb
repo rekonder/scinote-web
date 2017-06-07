@@ -81,15 +81,15 @@ class RepositoriesController < ApplicationController
 
     CSV.generate do |csv|
       csv << header_names
-      sample_row = []
-      rows.each do |row|
-        headers.each do |header|
-          if header == '-1'
-            sample_row << row.name
-          elsif header == '-2'
-            sample_row << row.created_by.full_name
-          elsif header == '-3'
-            sample_row << I18n.l(row.created_at, format: :full)
+      #sample_row = []
+      #rows.each do |row|
+      #  headers.each do |header|
+      #    if header == '-1'
+      #      sample_row << row.name
+          #elsif header == '-2'
+          #  sample_row << row.created_by.full_name
+          #elsif header == '-3'
+          #  sample_row << I18n.l(row.created_at, format: :full)
           #else
             #rc = RepositoryColumn.find_by_id(header)
             #if rc
@@ -106,10 +106,10 @@ class RepositoriesController < ApplicationController
             #else
             #  sample_row << nil
             #end
-          end
-        end
-      end
-      csv << sample_row
+        #  end
+        #end
+      #end
+      #csv << sample_row
     end
   end
 end

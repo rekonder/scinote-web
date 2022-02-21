@@ -35,7 +35,6 @@ module RepositoryDatatableHelper
                                          record
                                        )
                                 end
-        row['displayStockAlert'] = true
       end
 
       unless options[:view_mode]
@@ -47,15 +46,22 @@ module RepositoryDatatableHelper
       row['0'] = record[:row_assigned] if options[:my_module]
 
       # Add custom columns
-      custom_cells = record.repository_cells
+      custom_cells = record.repository_cells.where.not(value_type: 'RepositoryStockValue')
 
       custom_cells.each do |cell|
         row[columns_mappings[cell.repository_column.id]] =
           display_cell_value(cell, team)
       end
 
+      stock_present = record.repository_stock_cell.present?
+      stock_managable = !options[:include_stock_consumption] && can_manage_repository_rows?(record.repository)
+
+      # always add stock cell, even if empty
+      row['stock'] = stock_present ? display_cell_value(record.repository_stock_cell, team) : {}
+      row['stock'][:stock_managable] = stock_managable
+      row['stock']['value_type'] = 'RepositoryStockValue'
+
       if options[:include_stock_consumption] && record.repository.has_stock_management? && options[:my_module]
-        stock_present = record.repository_stock_cell.present?
         consumption_managable =
           stock_present && record.repository.is_a?(Repository) && can_update_my_module_stock_consumption?(options[:my_module])
 
@@ -70,8 +76,7 @@ module RepositoryDatatableHelper
           value: {
             consumed_stock: record.consumed_stock,
             consumed_stock_formatted:
-              "#{record.consumed_stock} #{record.repository_stock_value&.repository_stock_unit_item&.data}",
-            unit: record.repository_stock_value&.repository_stock_unit_item&.data
+              "#{record.consumed_stock} #{record.repository_stock_value&.repository_stock_unit_item&.data}"
           }
         }
       end
@@ -123,7 +128,6 @@ module RepositoryDatatableHelper
         end
         row['consumedStock']['stock_present'] = stock_present
         row['consumedStock']['consumption_managable'] = consumption_managable
-        row['displayStockAlert'] = true
       end
 
       row
@@ -150,13 +154,13 @@ module RepositoryDatatableHelper
       if options[:include_stock_consumption] && record.repository.has_stock_management?
         stock_present = record.repository_stock_cell.present?
         row['stock'] = stock_present ? display_cell_value(record.repository_stock_cell, record.repository.team) : {}
+        row['stock'][:stock_managable] = false
         row['consumedStock'] =
           if stock_present
             display_cell_value(record.repository_stock_consumption_cell, record.repository.team)
           else
             {}
           end
-        row['displayStockAlert'] = false
       end
 
       row

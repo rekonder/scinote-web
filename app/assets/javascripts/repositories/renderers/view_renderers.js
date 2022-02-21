@@ -181,31 +181,33 @@ $.fn.dataTable.render.AssignedTasksValue = function(data) {
   return "<div class='assign-counter-container'><span class='assign-counter'>0</span></div>";
 };
 
-$.fn.dataTable.render.RepositoryStockValue = function(data, row) {
-  var alertTag;
-  if (data && data.value) {
-    if (row && row.displayStockAlert) {
+$.fn.dataTable.render.RepositoryStockValue = function(data) {
+  var stockAlertTag;
+  if (data) {
+    if (data.value) {
       if (data.value.stock_amount <= 0) {
-        alertTag = 'stock-alert';
+        stockAlertTag = 'stock-alert';
       } else {
-        alertTag = parseFloat(data.value.stock_amount) < parseFloat(data.value.low_stock_threshold)
+        stockAlertTag = parseFloat(data.value.stock_amount) < parseFloat(data.value.low_stock_threshold)
           ? 'stock-low-stock-alert' : '';
       }
-    } else alertTag = '';
-    if (row && row.manageStockUrl) {
-      return `<a class="manage-repository-stock-value-link stock-value-view-render ${alertTag}">
+
+      if (data.stock_managable) {
+        return `<a class="manage-repository-stock-value-link stock-value-view-render ${stockAlertTag}">
+                  ${data.value.stock_formatted}
+                  </a>`;
+      }
+      return `<span class="stock-value-view-render
+                           ${data.stock_managable !== undefined ? stockAlertTag : ''}">
                 ${data.value.stock_formatted}
-                </a>`;
+                </span>`;
     }
-    return `<span class="stock-value-view-render ${alertTag}">
-              ${data.value.stock_formatted}
-              </span>`;
-  }
-  if (data && row && row.manageStockUrl) {
-    return `<a class="manage-repository-stock-value-link not-assigned-stock">
-              <i class="fas fa-box-open"></i>
-              ${I18n.t('libraries.manange_modal_column.stock_type.add_stock')}
-            </a>`;
+    if (data.stock_managable) {
+      return `<a class="manage-repository-stock-value-link not-assigned-stock">
+                <i class="fas fa-box-open"></i>
+                ${I18n.t('libraries.manange_modal_column.stock_type.add_stock')}
+              </a>`;
+    }
   }
   return `<span class="empty-stock-render">
             ${I18n.t('libraries.manange_modal_column.stock_type.no_item_stock')}

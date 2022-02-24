@@ -113,6 +113,19 @@
             </span>
           </a>
         </li>
+        
+        <% repository_table_filters.each do |repository_table_filter| %>
+          <li id="overwriteFilterLink" data-view-mode="active">
+            <a href="#" data-toggle="modal" class="overwrite-link" data-target="#modalSaveRepositoryTableFilter">
+              <span class="fas fa-save"></span>
+              <span class="overwrite-title">
+                <%= t('repositories.show.filters.overwrite_filter') %>
+                <span id="currentFilterName"> <%= repository_table_filter.name %> </span>
+              </span>
+            </a>
+          </li>
+
+        <% end %>
       </ul>
     </div>
   <% end %>

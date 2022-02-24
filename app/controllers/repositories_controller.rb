@@ -56,7 +56,9 @@ class RepositoriesController < ApplicationController
 
   def table_toolbar
     render json: {
-      html: render_to_string(partial: 'repositories/toolbar_buttons.html.erb')
+      html: render_to_string(partial: 'repositories/toolbar_buttons.html.erb', locals:{
+                              repository_table_filters: RepositoryTableFilter.where(repository_id: params[:repository_id])
+                            })
     }
   end
 

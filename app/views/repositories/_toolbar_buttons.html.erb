@@ -115,7 +115,7 @@
         </li>
         
         <% repository_table_filters.each do |repository_table_filter| %>
-          <li id="overwriteFilterLink" data-view-mode="active">
+          <li id="overwriteFilterLink" data-view-mode="active" data-saved-filter-id=<%= repository_table_filter.id %>>
             <a href="#" data-toggle="modal" class="overwrite-link" data-target="#modalSaveRepositoryTableFilter">
               <span class="fas fa-save"></span>
               <span class="overwrite-title">

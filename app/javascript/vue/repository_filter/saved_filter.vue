@@ -19,6 +19,7 @@
         this.$emit('savedFilter:load', this.savedFilter.attributes.show_url)
       },
       deleteFilter() {
+        console.log(this.savedFilter.attributes.delete_url);
         $.ajax({
           url: this.savedFilter.attributes.delete_url,
           type: 'DELETE',

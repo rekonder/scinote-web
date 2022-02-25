@@ -15,7 +15,7 @@
             :savedFilter.sync="savedFilters[index]"
             :canManageFilters="canManageFilters"
             @savedFilter:load="loadFilters"
-            @savedFilter:delete="savedFilters.splice(index, 1)"
+            @savedFilter:delete="deleteFilter(savedFilters, index)"
           />
         </div>
       </div>
@@ -90,6 +90,10 @@
         this.filters[index].data = filter.data;
         this.filters[index].isBlank = filter.isBlank;
         this.$emit("filters:update", this.filters);
+      },
+      deleteFilter(savedFilters, index){
+        $('[data-saved-filter-id=' +  savedFilters[index].id + ']').remove()
+        savedFilters.splice(index, 1)
       },
       clearFilters() {
         this.filters = [];

@@ -208,6 +208,8 @@
 
     $(document).on('click', '#overwriteFilterLink', function() {
       var $modal = $('#modalSaveRepositoryTableFilter');
+      var $selectedFiltername = $(this).find('#currentFilterName').text();
+      $modal.data('repositoryTableFilterId', $(this).attr('data-saved-filter-id'));
 
       // set overwrite flag
       $modal.data('overwrite', true);
@@ -219,7 +221,7 @@
 
 
       $('#modalSaveRepositoryTableFilter #repository_table_filter_name')
-        .val($modal.data('repositoryTableFilterName'));
+        .val($selectedFiltername);
     });
 
     $('#saveRepositoryTableFilterButton').on('click', function() {
@@ -258,7 +260,6 @@
           $modal.data('repositoryTableFilterId', response.data.id);
           $modal.data('repositoryTableFilterName', response.data.attributes.name);
           $('#currentFilterName').html(response.data.attributes.name);
-
 
           if (existingFilterIndex > -1) {
             repositoryFilterObject.savedFilters = repositoryFilterObject.savedFilters.map((f) => {

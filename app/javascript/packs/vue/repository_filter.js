@@ -146,6 +146,7 @@ window.initRepositoryFilter = () => {
   });
 
   $.get($('#filterContainer').data('saved-filters-url'), (data) => {
+    console.log(data);
     repositoryFilterContainer.savedFilters = data.data;
   });
 

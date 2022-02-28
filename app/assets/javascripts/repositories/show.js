@@ -196,7 +196,17 @@
       });
     });
   }
-
+  const Item = ({filterId, filterName }) => `
+    <li id="overwriteFilterLink" data-view-mode="active" data-saved-filter-id="${filterId}" %>>
+      <a href="#" data-toggle="modal" class="overwrite-link" data-target="#modalSaveRepositoryTableFilter">
+        <span class="fas fa-save"></span>
+        <span class="overwrite-title">
+          Overwrite
+          <span id="currentFilterName"> "${filterName}" </span>
+        </span>
+      </a>
+    </li>
+  `;
   function initFilterSaving() {
     $(document).on('click', '#newFilterLink', function() {
       $('#modalSaveRepositoryTableFilter #repository_table_filter_name').val('');
@@ -238,7 +248,7 @@
       }
 
       $button.addClass('disabled');
-
+      console.log(url);
       $.ajax({
         type: method,
         url: url,
@@ -254,12 +264,13 @@
             return f.id === response.data.id;
           });
 
-          var $overwriteLink = $('#overwriteFilterLink');
+          //var $overwriteLink = $('#overwriteFilterLink');
           $modal.modal('hide');
-          $overwriteLink.removeClass('hidden');
-          $modal.data('repositoryTableFilterId', response.data.id);
-          $modal.data('repositoryTableFilterName', response.data.attributes.name);
+          //$overwriteLink.removeClass('hidden');
           $('#currentFilterName').html(response.data.attributes.name);
+          var id1 = response.data.id;
+          var name1 = response.data.attributes.name;
+          $('#saveRepositoryFilters').html() += $('#saveRepositoryFilters').html([{ id1, name1 }].map(Item).join(''));
 
           if (existingFilterIndex > -1) {
             repositoryFilterObject.savedFilters = repositoryFilterObject.savedFilters.map((f) => {

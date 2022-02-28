@@ -113,6 +113,7 @@
         $('#filtersColumnsDropdown').toggleClass('open');
       },
       loadFilters(filterUrl) {
+        console.log(filterUrl)
         this.filters = [];
         $.get(filterUrl, (data) => {
           let filters = [];
@@ -135,8 +136,8 @@
 
           // set up save modal
           let $saveFiltersModal = $('#modalSaveRepositoryTableFilter');
-          let $overwriteLink = $('#overwriteFilterLink');
-          $overwriteLink.removeClass('hidden');
+          //let $overwriteLink = $('#overwriteFilterLink');
+          //$overwriteLink.removeClass('hidden');
           $saveFiltersModal.data('repositoryTableFilterId', data.data.id);
           $('#currentFilterName').html(data.data.attributes.name);
           $saveFiltersModal.data('repositoryTableFilterName', data.data.attributes.name);

@@ -125,7 +125,7 @@ window.initRepositoryFilter = () => {
         this.dataTableElement.removeAttr('data-repository-filter-json');
         $('#modalSaveRepositoryTableFilter').data('repositoryTableFilterId', null);
         $('#saveRepositoryFilters').addClass('hidden');
-        $('#overwriteFilterLink').addClass('hidden');
+        //$('#overwriteFilterLink').addClass('hidden');
       },
       reloadDataTable() {
         this.dataTableElement.DataTable().ajax.reload();
@@ -146,7 +146,6 @@ window.initRepositoryFilter = () => {
   });
 
   $.get($('#filterContainer').data('saved-filters-url'), (data) => {
-    console.log(data);
     repositoryFilterContainer.savedFilters = data.data;
   });
 

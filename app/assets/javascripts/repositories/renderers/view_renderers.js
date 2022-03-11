@@ -188,7 +188,7 @@ $.fn.dataTable.render.AssignedTasksValue = function(data, row) {
     tasksLinkHTML = "<div class='assign-counter-container'><span class='assign-counter'>0</span></div>";
   }
   if (row.hasActiveReminders) {
-    return `<div class="dropdown row-reminders-dropdown" data-row-reminders-url="${row.rowRemindersUrl}">
+    return `<div class="row-reminders-dropdown" data-row-reminders-url="${row.rowRemindersUrl}">
               <i class="fas fa-bell dropdown-toggle row-reminders-icon" data-toggle="dropdown" id="rowReminders${row.DT_RowId}}"></i>
               <ul class="dropdown-menu" role="menu" aria-labelledby="rowReminders${row.DT_RowId}">
               </ul>

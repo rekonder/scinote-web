@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign, no-use-before-define  */
 /* global DataTableHelpers PerfectScrollbar FilePreviewModal animateSpinner HelperModule
-initAssignedTasksDropdown I18n prepareRepositoryHeaderForExport */
+initAssignedTasksDropdown I18n prepareRepositoryHeaderForExport initReminderDropdown */
 
 var MyModuleRepositories = (function() {
   const FULL_VIEW_MODAL = $('#myModuleRepositoryFullViewModal');
@@ -223,6 +223,10 @@ var MyModuleRepositories = (function() {
       },
       createdRow: function(row, data) {
         $(row).find('.item-name').attr('data-state', data.DT_RowAttr['data-state']);
+      },
+      fnInitComplete: function() {
+        initAssignedTasksDropdown(tableContainer);
+        initReminderDropdown(tableContainer);
       }
     });
   }
@@ -274,6 +278,7 @@ var MyModuleRepositories = (function() {
           }
         }
         initAssignedTasksDropdown(tableContainer);
+        initReminderDropdown(tableContainer);
       },
 
       drawCallback: function() {

@@ -10,7 +10,10 @@
         <% end %>
       </div>
     <% end %>
-    <div class="row-reminders-footer" data-row-reminders-url="<%= repository_repository_row_repository_cell_hide_reminder_url(reminder.repository_row.repository, reminder.repository_row, reminder) %> ">
+    <div class="row-reminders-footer" data-row-hide-reminders-url="
+      <%= repository_repository_row_repository_cell_hide_reminder_url(reminder.repository_row.repository, 
+                                                                      reminder.repository_row, 
+                                                                      reminder) %> ">
       <i class="fas fa-times"></i>
       <%= t('repository_row.reminder.clear') %>
     </div>

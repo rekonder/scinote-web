@@ -12,17 +12,16 @@
     <% elsif reminder.value_type == 'RepositoryDateTimeValueBase' %>
       <div class="row-reminders-title"><strong><%= t('repository_row.reminder.date_reminder') %></strong></div>
       <div class="row-reminders-body">
-      <%if reminder.value.data < Time.now.utc %>
-        <%= t('repository_row.reminder.item_expired') %>
-      <% else %>
-          <%= t('repository_row.reminder.date_expiration', date_expiration: 
-          ((reminder.value.data - Time.now.utc)/1.day).ceil.to_s + 
-          (((reminder.value.data - Time.now.utc)/1.day).ceil > 1 ? ' days' : ' day')).html_safe %>
-      <% end %>
-      <% if reminder.repository_column.metadata["reminder_message"] != ""%>
-        <span> <%= reminder.repository_column.metadata["reminder_message"] %> </span>
-      <% end %>
-         
+        <%if reminder.value.data < Time.now.utc %>
+          <%= t('repository_row.reminder.item_expired') %>
+        <% else %>
+            <%= t('repository_row.reminder.date_expiration', date_expiration: 
+            ((reminder.value.data - Time.now.utc)/1.day).ceil.to_s + 
+            (((reminder.value.data - Time.now.utc)/1.day).ceil > 1 ? ' days' : ' day')).html_safe %>
+        <% end %>
+        <% if reminder.repository_column.metadata["reminder_message"] != ""%>
+          <span> <%= reminder.repository_column.metadata["reminder_message"] %> </span>
+        <% end %>
       </div>
     <% end %>
     <div class="row-reminders-footer" data-row-hide-reminders-url="

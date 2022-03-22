@@ -23,7 +23,7 @@ module Api
       end
 
       def create
-        inventory_column =
+      inventory_column =
           @inventory.repository_columns.create!(inventory_column_params)
         render jsonapi: inventory_column,
                serializer: InventoryColumnSerializer,
@@ -68,12 +68,16 @@ module Api
 
         params.require(:data).require(:attributes)
         new_params = params
-                     .permit(data: { attributes: [:name, :data_type, metadata: {}] })[:data]
+                     .permit(data: { attributes: [:name, :data_type, metadata: {}, repository_stock_unit_items_attributes: %i(data)] })[:data]
                      .merge(created_by: @current_user)
         if new_params[:attributes][:data_type].present?
           new_params[:attributes][:data_type] =
             Extends::API_REPOSITORY_DATA_TYPE_MAPPINGS
             .key(new_params.dig(:attributes, :data_type))
+        end
+
+        new_params[:attributes][:repository_stock_unit_items_attributes]&.map do |m|
+          m.merge!(created_by_id: @current_user.id, last_modified_by_id: @current_user.id)
         end
         new_params
       end

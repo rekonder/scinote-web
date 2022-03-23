@@ -44,7 +44,7 @@ class RepositoryStockValuesController < ApplicationController
       )
     end
 
-    render json: @repository_stock_vlaue
+    render json: @repository_stock_value
   end
 
   private

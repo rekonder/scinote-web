@@ -5,9 +5,9 @@ module Api
     class InventoryColumnSerializer < ActiveModel::Serializer
       type :inventory_columns
       attributes :name, :data_type, :metadata
-      attribute :repository_stock_unit_items,  if: (lambda do
-                                                      object.data_type == 'RepositoryStockValue'
-                                                    end)
+      attribute :repository_stock_unit_items, if: (lambda do
+                                                    object.data_type == 'RepositoryStockValue'
+                                                  end)
       has_many :repository_list_items,
                key: :inventory_list_items,
                serializer: InventoryListItemSerializer,
@@ -40,7 +40,7 @@ module Api
       end
 
       def repository_stock_unit_items
-        self.object.repository_stock_unit_items.map do |item|
+        object.repository_stock_unit_items.map do |item|
           {
             id: item.id,
             data: item.data,

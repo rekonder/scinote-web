@@ -5,6 +5,10 @@ FactoryBot.define do
     created_by { create :user }
     last_modified_by { created_by }
     repository_column
-    data { "l" }
+    data { Faker::Name.unique.name }
+
+    after(:create) do |item|
+      item.repository_column.reload
+    end
   end
 end

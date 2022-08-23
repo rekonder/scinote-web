@@ -26,7 +26,7 @@ module ProtocolImporters
           step_params.symbolize_keys!
 
           # Create step with nested attributes for tables
-          step = @protocol.steps.create!(step_params.slice(:name, :position, :tables_attributes)
+          step = @protocol.steps.create!(step_params.slice(:name, :position)
                                   .merge(user: @user, completed: false)
                                   .merge(last_modified_by_id: @user.id))
 
@@ -36,6 +36,17 @@ module ProtocolImporters
             position: 0,
             orderable: step_text
           )
+
+          step_params[:tables_attributes]&.each do |table_params|
+            table = step.tables.new(table_params.merge(team: @team, created_by: @user))
+            step.with_lock do
+              table.save!
+              step.step_orderable_elements.create!(
+                position: step.step_orderable_elements.size,
+                orderable: table.step_table
+              )
+            end
+          end
 
           TinyMceAsset.update_images(step_text, '[]', @user)
 

@@ -66,6 +66,7 @@ var dropdownSelector = (function() {
     var modalContainer = container.closest('.modal-dialog');
     var modalContainerBottom = 0;
     var maxHeight = 0;
+    var afterContainer = 0;
     const bottomTreshold = 280;
 
     if (modalContainer.length && windowHeight !== modalContainer.height()) {
@@ -74,6 +75,8 @@ var dropdownSelector = (function() {
       containerPositionLeft -= modalClientRect.left;
       modalContainerBottom = windowHeight + modalClientRect.bottom;
       maxHeight += modalContainerBottom;
+      afterContainer = window.getComputedStyle(container[0], ':after').height;
+      console.log(container[0], afterContainer);
     }
     bottomSpace = windowHeight - containerPosition - containerHeight;
 
@@ -1061,6 +1064,20 @@ var dropdownSelector = (function() {
       var container = $(selector).next();
       if ($(selector).length === 0) return false;
       container.removeClass('error');
+      return this;
+    },
+
+    showWarning: function(selector, warning) {
+      var container = $(selector).next();
+      if ($(selector).length === 0) return false;
+      container.addClass('warning').attr('data-warning-text', warning);
+      return this;
+    },
+
+    hideWarning: function(selector) {
+      var container = $(selector).next();
+      if ($(selector).length === 0) return false;
+      container.removeClass('warning');
       return this;
     }
   };

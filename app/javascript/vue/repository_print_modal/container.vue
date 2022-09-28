@@ -24,7 +24,10 @@
               </label>
               <DropdownSelector
                 :disableSearch="true"
+                :labelHTML="true"
                 :options="printers_dropdown"
+                :optionLabel="printerOptionLabel"
+                :tagLabel="printerOptionLabel"
                 :selectorId="`LabelPrinterSelector`"
                 @dropdown:changed="selectPrinter"
               />
@@ -129,7 +132,14 @@
       },
       printers_dropdown() {
         return this.printers.map(i => {
-          return {value: i.id, label: i.attributes.name}
+          return {
+            value: i.id,
+            label: i.attributes.display_name,
+            params: {
+              status: i.attributes.status,
+              display_status: i.attributes.display_status
+            }
+          }
         })
       }
     },
@@ -189,6 +199,9 @@
             })
           }
         });
+      },
+      printerOptionLabel(option) {
+        return `${option.label} <span class="status-${option.params.status}"> • ${option.params.display_status}`
       }
     }
   }

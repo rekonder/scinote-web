@@ -193,15 +193,17 @@
             this.printers.push({
               id: `zebra${this.printers.length}`,
               attributes: {
-                name: device.name,
-                type_of: 'zebra'
+                display_name: device.name,
+                type_of: 'zebra',
+                status: device.status.toLowerCase(),
+                display_status: device.status
               }
             })
           }
         });
       },
       printerOptionLabel(option) {
-        return `${option.label} <span class="status-${option.params.status}"> • ${option.params.display_status}`
+        return `${option.label}&nbsp;<span class="status-${option.params.status}">• ${option.params.display_status}`
       }
     }
   }

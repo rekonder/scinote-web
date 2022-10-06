@@ -3,8 +3,8 @@
 class LabelPrintersController < ApplicationController
   include InputSanitizeHelper
 
-  before_action :check_manage_permissions, except: %i(index index_zebra update_progress_modal)
-  before_action :find_label_printer, only: %i(edit update destroy)
+  before_action :check_manage_permissions, except: %i(index index_zebra update_progress_modal printer_status_fluics)
+  before_action :find_label_printer, only: %i(edit update destroy printer_status_fluics)
 
   def index
     @label_printers = LabelPrinter.all
@@ -112,6 +112,16 @@ class LabelPrintersController < ApplicationController
     end
 
     redirect_to label_printers_path
+  end
+
+  def printer_status_fluics
+    api_client = LabelPrinters::Fluics::ApiClient.new(
+      @label_printer.fluics_api_key
+    )
+    response = api_client.status(@label_printer.fluics_lid)
+    status = response['connected'] && response['printerState']['printerStatus'] == '00' ? :ready : :unreachable
+    status = 'test'
+    render json: { status: status }
   end
 
   private

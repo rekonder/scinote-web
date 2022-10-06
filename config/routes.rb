@@ -69,6 +69,7 @@ Rails.application.routes.draw do
     resources :label_printers, only: [] do
       post :print, on: :member
       get :update_progress_modal, on: :member
+      get :printer_status_fluics, on: :member
     end
 
     get 'users/settings/account/connected_accounts',

@@ -20,7 +20,6 @@ module LabelPrinters
 
         copy_count.times do
           response = api_client.print(label_printer.fluics_lid, payload)
-
           status = response['status'] == 'OK' ? :ready : LabelPrinter::FLUICS_STATUS_MAP[response['printerStatus']]
           label_printer.update!(status: status)
 

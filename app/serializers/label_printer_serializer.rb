@@ -4,10 +4,11 @@ class LabelPrinterSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
   include ApplicationHelper
 
-  attributes :name, :display_name, :description, :type_of, :language_type, :status, :display_status
+  attributes :name, :display_name, :description, :type_of, :language_type, :status, :display_status, :urls
 
   def urls
     {
+      status_url: printer_status_fluics_label_printer_path(object.id)
     }
   end
 

@@ -23,6 +23,7 @@
                 {{ i18n.t('repository_row.modal_print_label.printer') }}
               </label>
               <DropdownSelector
+                ref="labelPrinterDropdown"
                 :disableSearch="true"
                 :labelHTML="true"
                 :options="printers_dropdown"
@@ -124,7 +125,7 @@
     },
     mounted() {
       $.get(this.urls.labelTemplates, (result) => {
-        this.templates = result.data
+        this.templates = result.data;
         this.selectDefaultLabelTemplate();
       })
 
@@ -159,6 +160,9 @@
         })
       },
       printers_dropdown() {
+        if (this.selectedPrinter) {
+          this.$refs.labelPrinterDropdown.selectValues(this.selectedPrinter.attributes.id);
+        }
         return this.printers.map(i => {
           return {
             value: i.id,
@@ -174,6 +178,16 @@
     watch: {
       showModal() {
         if (this.showModal) {
+          this.printers = this.printers.map(element => {
+            if (element.attributes.type_of === 'fluics') {
+              $.get(element.attributes.urls.status_url, (result) => {
+                element.attributes.display_status = result.status
+              });
+            } else {
+              
+            }
+            return element;
+          });
           $(this.$refs.modal).modal('show');
         }
       },
@@ -196,7 +210,8 @@
         }
       },
       selectPrinter(value) {
-        this.selectedPrinter = this.printers.find(i => i.id === value)
+        this.selectedPrinter = this.printers.find(i => i.id === value);
+        console.log(this.selectedPrinter)
         this.selectDefaultLabelTemplate();
       },
       selectTemplate(value) {

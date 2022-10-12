@@ -161,7 +161,7 @@
       },
       printers_dropdown() {
         if (this.selectedPrinter) {
-          this.$refs.labelPrinterDropdown.selectValues(this.selectedPrinter.attributes.id);
+          this.$refs.labelPrinterDropdown.selectValues(this.selectedPrinter.id);
         }
         return this.printers.map(i => {
           return {
@@ -184,7 +184,7 @@
                 element.attributes.display_status = result.status
               });
             } else {
-              
+              this.zebraPrinters.getStatus(element.attributes.display_name);
             }
             return element;
           });
@@ -211,7 +211,6 @@
       },
       selectPrinter(value) {
         this.selectedPrinter = this.printers.find(i => i.id === value);
-        console.log(this.selectedPrinter)
         this.selectDefaultLabelTemplate();
       },
       selectTemplate(value) {
@@ -265,6 +264,15 @@
                 status: device.status.toLowerCase(),
                 display_status: device.status
               }
+            })
+          },
+          updateStatus: (device) => {
+            this.printers.map(i => {
+              if (i.attributes.display_name === device.name) {
+                i.attributes.status = device.status.toLowerCase();
+                i.attributes.display_status = 'test123';
+              }
+              return i;
             })
           }
         });

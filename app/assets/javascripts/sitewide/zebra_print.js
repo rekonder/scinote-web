@@ -8,6 +8,7 @@
     noDevices: function(), // what to do if we do not find any device
     appendDevice: function(device), // use device which we find during search
     beforeRefresh: function(), // Action happen before every new device search
+    updateStatus: function(device), // Get printer with updated status
   }
 */
 
@@ -58,6 +59,12 @@ var zebraPrint = (function() {
   function appendDevice(device) {
     if (CONFIG && 'appendDevice' in CONFIG) {
       CONFIG.appendDevice(device);
+    }
+  }
+
+  function updateStatus(device) {
+    if (CONFIG && 'updateStatus' in CONFIG) {
+      CONFIG.updateStatus(device);
     }
   }
 
@@ -162,6 +169,14 @@ var zebraPrint = (function() {
     },
     refreshList: function() {
       searchZebraPrinters();
+    },
+    getStatus: function(printerName) {
+      device = findDevice(printerName);
+      if (device) {
+        getPrinterStatus(device).then((device) => {
+          updateStatus(device);
+        });
+      }
     },
 
     /*

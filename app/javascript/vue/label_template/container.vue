@@ -19,8 +19,8 @@
           :attributeName="i18n.t('label_templates.show.name_error_prefix')"
           :autofocus="editingName"
           :editOnload="newLabel"
-          @editingEnabled="editingName = true"
-          @editingDisabled="editingName = false"
+          @editing:enabled="editingName = true"
+          @editing:disabled="editingName = false"
           @update="updateName"
         />
         <template v-else>
@@ -41,8 +41,8 @@
           :attributeName="i18n.t('label_templates.show.description_error_prefix')"
           :placeholder="i18n.t('label_templates.show.description_placeholder')"
           :autofocus="editingDescription"
-          @editingEnabled="editingDescription = true"
-          @editingDisabled="editingDescription = false"
+          @editing:enabled="editingDescription = true"
+          @editing:disabled="editingDescription = false"
           @update="updateDescription"
         />
         <template v-else>

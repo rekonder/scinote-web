@@ -16,8 +16,8 @@
           :autofocus="editingName"
           :smartAnnotation="true"
           :attributeName="`${i18n.t('Checklist')} ${i18n.t('name')}`"
-          @editingEnabled="editingName = true"
-          @editingDisabled="editingName = false"
+          @editing:enabled="editingName = true"
+          @editing:disabled="editingName = false"
           @update="updateName"
         />
       </div>

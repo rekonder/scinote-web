@@ -130,11 +130,11 @@
           if (data) {
             this.$emit('update', data)
           }
-          this.$emit('editingDisabled')
+          this.$emit('editing:disabled')
         }).then(() => {
           this.active = true;
           this.initCharacterCount();
-          this.$emit('editingEnabled');
+          this.$emit('editing:enabled');
         });
       },
       getStaticUrl(name) {

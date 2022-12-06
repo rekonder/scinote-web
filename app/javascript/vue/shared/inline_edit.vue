@@ -47,7 +47,8 @@
       multilinePaste: { type: Boolean, default: false },
       smartAnnotation: { type: Boolean, default: false },
       editOnload: { type: Boolean, default: false },
-      defaultValue: { type: String, default: '' }
+      defaultValue: { type: String, default: '' },
+      callbackOnDisabled: { type: Boolean, default: false }
     },
     data() {
       return {
@@ -135,12 +136,12 @@
             SmartAnnotation.init($(this.$refs.input));
           }
         })
-        this.$emit('editingEnabled');
+        this.$emit('editing:enabled');
       },
       cancelEdit() {
         this.editing = false;
         this.newValue = this.value || '';
-        this.$emit('editingDisabled');
+        this.$emit('editing:disabled');
       },
       handlePaste(e) {
         this.dirty = true;
@@ -179,6 +180,7 @@
       update() {
         if (!this.dirty && !this.isBlank) {
           this.editing = false;
+          if(this.callbackOnDisabled) this.$emit('editing:disabled');
           return;
         }
 
@@ -187,7 +189,7 @@
         this.newValue = this.$refs.input.value // Fix for smart annotation
         this.newValue = this.newValue.trim();
         this.editing = false;
-        this.$emit('editingDisabled');
+        this.$emit('editing:disabled');
         this.$emit('update', this.newValue);
       }
     }

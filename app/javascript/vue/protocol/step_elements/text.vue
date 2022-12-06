@@ -28,8 +28,8 @@
       :lastUpdated="element.attributes.orderable.updated_at"
       :characterLimit="100000"
       @update="update"
-      @editingDisabled="disableEditMode"
-      @editingEnabled="enableEditMode"
+      @editing:disabled="disableEditMode"
+      @editing:enabled="enableEditMode"
     />
     <div class="view-text-element" v-else-if="element.attributes.orderable.text_view" v-html="element.attributes.orderable.text_view"></div>
     <div v-else class="empty-text-element">

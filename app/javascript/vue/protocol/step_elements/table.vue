@@ -13,8 +13,8 @@
           :allowBlank="false"
           :autofocus="editingName"
           :attributeName="`${i18n.t('Table')} ${i18n.t('name')}`"
-          @editingEnabled="enableNameEdit"
-          @editingDisabled="disableNameEdit"
+          @editing:enabled="enableNameEdit"
+          @editing:disabled="disableNameEdit"
           @update="updateName"
         />
       </div>

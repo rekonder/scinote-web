@@ -46,3 +46,21 @@
     }
   }
 }
+
+.title-row {
+  margin-top: 4px;
+
+  .project-name {
+    .sci-inline-edit {
+      .sci-inline-edit__content {
+        .sci-inline-edit__view {
+          padding: 0;
+        }
+
+        textarea {
+          padding: 0 0 0 10px;
+        }
+      }
+    }
+  }
+}

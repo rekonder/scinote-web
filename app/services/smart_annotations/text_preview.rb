@@ -19,6 +19,7 @@ module SmartAnnotations
       end
 
       def generate_exp_snippet(_, object)
+        byebug
         if object.archived?
           return "#{object.name} #{I18n.t('atwho.res.archived')}"
         end

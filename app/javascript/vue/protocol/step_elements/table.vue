@@ -177,10 +177,18 @@
       update() {
         this.$emit('update', this.element)
       },
+      testSmartAnnotation() {
+        for (var row = 0; row < this.tableObject.countRows(); row++) {
+          for (var column = 0; column < this.tableObject.countCols(); column++) {
+            console.log(row, column)
+          }
+        }
+      },
       loadTableData() {
         let container = this.$refs.hotTable;
         let data = JSON.parse(this.element.attributes.orderable.contents);
         let metadata = this.element.attributes.orderable.metadata || {};
+        // this.tableObject = new Handsontable.Core(container, {
         this.tableObject = new Handsontable(container, {
           data: data.data,
           width: '100%',
@@ -193,8 +201,19 @@
           formulas: true,
           preventOverflow: 'horizontal',
           readOnly: !this.editingTable,
-          afterUnlisten: () => setTimeout(this.updateTable, 100) // delay makes cancel button work
+          afterUnlisten: () => setTimeout(this.updateTable, 100), // delay makes cancel button work
+          afterBeginEditing: (row, column) => SmartAnnotation.init(document.querySelector('.handsontableInput')),
+          beforeKeyDown: function(event) {
+            return false;
+          },
+          beforeOnCellMouseDown: function(event, coords, TD, controller) {
+            event.preventDefault();
+            event.stopImmediatePropagation();
+          }
         });
+
+        //this.tableObject.addHook('afterInit', this.testSmartAnnotation);
+        //this.tableObject.init();
       }
     }
   }

@@ -1058,6 +1058,14 @@ en:
       recent_protocols_from_repository: "Recent protocols from the Repository"
       code: "ID: "
       recent_protocols_from_repository: "Recent protocols from the Templates"
+    shareable_links:
+      modal:
+        title: "Share task"
+        sharing_toggle_label: "Link sharing"
+        description_placeholder: "This is the message written by the previous user."
+        sharing_link_label: "Shared link"
+        copy_button: "Copy"
+        disclaimer: "Anyone with the link can view the protocol and results pages of this task."
     notes:
       title: "Notes"
       no_description: "No task description"

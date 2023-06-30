@@ -45,6 +45,7 @@
       <div id="task-details" class="task-section-header">
         <div class="task-flows">
           <%= render partial: 'my_modules/status_flow/task_flow_button', locals: { my_module: @my_module } if @my_module.my_module_status_flow %>
+          <%= render partial: 'my_modules/modals/share_my_module_modal' %>
         </div>
         <div class="task-details-container flex items-center gap-2">
           <a class="task-section-caret collapsed" role="button" data-toggle="collapse" href="#details-container" aria-expanded="false" aria-controls="details-container">

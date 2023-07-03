@@ -1066,6 +1066,8 @@ en:
         sharing_link_label: "Shared link"
         copy_button: "Copy"
         disclaimer: "Anyone with the link can view the protocol and results pages of this task."
+      share: "Share"
+      shared: "Shared"
     notes:
       title: "Notes"
       no_description: "No task description"

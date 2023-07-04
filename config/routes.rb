@@ -465,6 +465,8 @@ Rails.application.routes.draw do
 
       resource :status_flow, controller: :my_module_status_flow, only: :show
 
+      resource :shareable_link, controller: :my_module_shareable_links, only: %i(show create update destroy)
+
       resources :my_module_comments,
                 path: '/comments',
                 only: %i(create index update destroy)
@@ -960,6 +962,8 @@ Rails.application.routes.draw do
       post :save_activity_filter
     end
   end
+
+  get '/shared/:uuid', to: 'my_module_shareable_links#shareable_object', as: :shared
 
   resources :marvin_js_assets, only: %i(create update destroy show) do
     collection do

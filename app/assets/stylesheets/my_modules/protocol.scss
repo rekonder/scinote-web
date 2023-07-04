@@ -107,7 +107,11 @@
     border-radius: 0 4px 4px 0;
   }
 
-  .sci-input-field.share-link-input {
-    border-radius: 4px 0 0 4px !important;
+  .shareable-link-error {
+    color: var(--sn-coral);
+  }
+
+  .shareable-link-disclaimer {
+    color: var(--sn-grey);
   }
 }

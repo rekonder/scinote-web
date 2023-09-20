@@ -46,7 +46,7 @@ class RepositoryRowsController < ApplicationController
     @repository_row = @repository.repository_rows.find_by(id: params[:id])
     return render_404 unless @repository_row
 
-    @my_module = @repository_row.my_modules.find_by(id: params[:my_module_id])
+    @my_module = MyModule.find_by(id: params[:my_module_id])
     return render_403 if @my_module && !can_read_my_module?(@my_module)
 
     if @my_module

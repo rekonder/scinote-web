@@ -5,6 +5,16 @@ json.repository_name @repository.name
 json.permissions do
   json.can_export_repository_stock can_export_repository_stock?(@repository_row.repository)
 end
+
+json.actions do
+  if @my_module.present?
+    json.assign_repository_row do
+      json.assign_url my_module_repositories_path(@my_module.id)
+      json.disabled @my_module_assign_error.present?
+    end
+  end
+end
+
 json.default_columns do
   json.name @repository_row.name
   json.code @repository_row.code

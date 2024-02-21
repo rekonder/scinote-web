@@ -22,6 +22,8 @@ module Lists
         projects = projects.where(project_folder: @current_folder)
         folders = folders.where(parent_folder: @current_folder)
 
+        byebug
+
         @records = projects + folders
       end
 
@@ -35,7 +37,7 @@ module Lists
     def fetch_projects
       @team.projects
            .includes(:team, user_assignments: %i(user user_role))
-           .includes(:project_comments, experiments: { my_modules: { my_module_status: :my_module_status_implications } })
+           .includes(:project_comments)
            .visible_to(@user, @team)
            .left_outer_joins(:project_comments)
            .select('projects.*')

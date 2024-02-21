@@ -22,9 +22,7 @@ module Lists
         projects = projects.where(project_folder: @current_folder)
         folders = folders.where(parent_folder: @current_folder)
 
-        byebug
-
-        @records = projects + folders
+        @records = Project.from("((#{projects.to_sql}) UNION ALL (#{folders.to_sql})) AS projects")
       end
 
       sort_records
@@ -40,8 +38,16 @@ module Lists
            .includes(:project_comments)
            .visible_to(@user, @team)
            .left_outer_joins(:project_comments)
-           .select('projects.*')
-           .select('COUNT(DISTINCT comments.id) AS comment_count')
+           .select('projects.team_id',
+                   'projects.created_at',
+                   'projects.archived_on',
+                   'projects.default_public_user_role_id',
+                   'projects.name',
+                   'projects.id')
+           .select('COUNT(DISTINCT comments.id) AS comment_count',
+                   '0 AS projects_count',
+                   '0 AS folders_count',
+                   '1 as type')
            .group('projects.id')
     end
 
@@ -51,9 +57,15 @@ module Lists
                              .joins('LEFT OUTER JOIN project_folders child_folders
                                     ON child_folders.parent_folder_id = project_folders.id')
                              .left_outer_joins(:projects)
-      project_folders.select('project_folders.*')
+      project_folders.select('project_folders.team_id',
+                             'project_folders.created_at',
+                             'project_folders.archived_on',
+                             '0 AS default_public_user_role_id',
+                             'project_folders.name',
+                             'project_folders.id')
                      .select('COUNT(DISTINCT projects.id) AS projects_count')
                      .select('COUNT(DISTINCT child_folders.id) AS folders_count')
+                     .select('0 AS comment_count', '0 AS type')
                      .group('project_folders.id')
     end
 
@@ -102,21 +114,21 @@ module Lists
 
       case sort
       when 'created_at_ASC'
-        @records = @records.sort_by(&:created_at).reverse!
+        @records = @records.order(:created_at)
       when 'created_at_DESC'
-        @records = @records.sort_by(&:created_at)
+        @records = @records.order(created_at: :desc)
       when 'name_ASC'
-        @records = @records.sort_by { |c| c.name.downcase }
+        @records = @records.order(:name)
       when 'name_DESC'
-        @records = @records.sort_by { |c| c.name.downcase }.reverse!
+        @records = @records.order(name: :desc)
       when 'code_ASC'
-        @records = @records.sort_by(&:id)
+        @records = @records.order(:id)
       when 'code_DESC'
-        @records = @records.sort_by(&:id).reverse!
+        @records = @records.order(id: :desc)
       when 'archived_on_ASC'
-        @records = @records.sort_by(&:archived_on)
+        @records = @records.order(:archived_on)
       when 'archived_on_DESC'
-        @records = @records.sort_by(&:archived_on).reverse!
+        @records = @records.order(archived_on: :desc)
       end
     end
 

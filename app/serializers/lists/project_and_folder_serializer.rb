@@ -88,7 +88,7 @@ folders_count: object.folders_count)
     private
 
     def project?
-      object.instance_of?(Project)
+      object.type > 0
     end
   end
 end

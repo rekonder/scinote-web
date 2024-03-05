@@ -35,12 +35,13 @@ module Lists
     def fetch_projects
       @team.projects
            .includes(:team, user_assignments: %i(user user_role))
-           .includes(:project_comments, experiments: { my_modules: { my_module_status: :my_module_status_implications } })
+           .includes(:project_comments)
            .visible_to(@user, @team)
            .left_outer_joins(:project_comments)
            .select('projects.team_id',
                    'projects.created_at',
                    'projects.archived_on',
+                   'projects.updated_at',
                    'projects.default_public_user_role_id',
                    'projects.name',
                    'projects.id')
@@ -60,6 +61,7 @@ module Lists
       project_folders.select('project_folders.team_id',
                              'project_folders.created_at',
                              'project_folders.archived_on',
+                             'project_folders.updated_at',
                              '0 AS default_public_user_role_id',
                              'project_folders.name',
                              'project_folders.id')
@@ -153,7 +155,7 @@ module Lists
     end
 
     def project_users_count(object)
-      project?(object) ? object.users.count : 0
+      project?(object) ? object.users.count : -1
     end
 
     def project?(object)
